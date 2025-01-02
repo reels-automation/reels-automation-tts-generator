@@ -21,14 +21,14 @@ def move_file(path_to_audio:str, new_folder_path:str ="temp_tts_audios/") -> str
 def main():
     google_tts = GoogleTts()
     app_consumer = Application(
-        broker_address ="localhost:9092",
+        broker_address ="broker:9093",
         loglevel="DEBUG",
         consumer_group = "scripts_video_reader",
         auto_offset_reset = "latest"
     )
 
     minio_client = Minio(
-    "172.19.0.2:9000",
+    "minio:9000",
     access_key="AKIAIOSFODNN7EXAMPLE",
     secret_key="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
     secure=False
@@ -74,7 +74,7 @@ def main():
                 os.remove(new_audio_path)
 
                 app_producer = Application(
-                    broker_address="localhost:9092", loglevel="DEBUG"
+                    broker_address="broker:9093", loglevel="DEBUG"
                 )
                 with app_producer.get_producer() as producer:                    
                     producer.produce(
