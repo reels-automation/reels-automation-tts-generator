@@ -13,6 +13,7 @@ def move_file(path_to_audio:str, new_folder_path:str ="temp_tts_audios/") -> str
 
     if not os.path.exists(new_folder_path):
         os.makedirs(new_folder_path)
+    
     shutil.move(path_to_audio, new_path)
     
     
@@ -78,8 +79,8 @@ def main():
                 )
                 with app_producer.get_producer() as producer:                    
                     producer.produce(
-                        topic="audio_subtitles",
-                        key = "Ai Subtitles",
+                        topic="audio_homero",
+                        key = "Homero",
                         value = str({"status": "OK", "audio_name": destination_file, "bucket_name": bucket_name})
                     )
                 logging.info("Produced. Sleeping..")

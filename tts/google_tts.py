@@ -5,7 +5,10 @@ from tts.I_tts_generator import ITtsGenerator
 from gtts import gTTS
 
 class GoogleTts(ITtsGenerator):
-    
+
+    def sanitize_filename(self,filename: str) -> str:
+        return filename.replace(":", "_")
+
     def generate_tts(self, script:str, tema:str=None) -> str :
 
         language = 'es'
@@ -15,6 +18,7 @@ class GoogleTts(ITtsGenerator):
             audio_name = f"{tema}_{datetime.datetime.now()}.mp3"
         else:
             audio_name = f"{datetime.datetime.now()}.mp3"
+        audio_name = self.sanitize_filename(audio_name)
         audio_gtts.save(audio_name)
     
         return audio_name
